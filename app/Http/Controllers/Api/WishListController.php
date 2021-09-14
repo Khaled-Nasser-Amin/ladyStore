@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use App\Traits\Responses;
 use Illuminate\Http\Request;
@@ -30,8 +29,4 @@ class WishListController extends Controller
     }
 
 
-    public function all_favorites(Request $request){
-        app()->setlocale($request->lang);
-        return $this->success());
-    }
 }

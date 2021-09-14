@@ -107,6 +107,7 @@ class ProfileController extends Controller
     }
 
 
+    //change password
     public function changePassword(Request $request){
         app()->setlocale($request->lang);
         $user=$request->user();
@@ -133,99 +134,103 @@ class ProfileController extends Controller
         }
     }
 
+    //change email
+        public function changeEmail(Request $request){
+            $user=$this->emailValidation($request);
+            if(!isset($user->id)){
+                return $user;
+            }
+            if($user->email == $request->email){
+                return response()->json(['email'=>__('text.You already have this email')],404);
+            }
+            $code=substr(str_shuffle('1234567890'),0,6);
+            $user->update(['code' => $code]);
+            Mail::to($request->email)->send(new SendCode($code,$user->name));
+            return $this->success($request->email,__('text.We have sent a verification code to your email').":".$request->email,200);
+        }
 
-    public function changeEmail(Request $request){
-        $user=$this->emailValidation($request);
-        if(!isset($user->id)){
+
+        public function checkEmailOtp(Request $request){
+            $user=$this->emailValidation($request);
+            if(!isset($user->id)){
+                return $user;
+            }
+            if($request->code == $user->code && isset($request->email)){
+                $user->update(['email' => $request->email,'code' => null]);
+                $user->save();
+                return $this->success($request->email,__('text.Updated Successfully'),200);
+            }else{
+                return response()->json(['code'=>__('text.Invalid Code!')],404);
+            }
+
+        }
+
+        protected function emailValidation($request){
+            app()->setlocale($request->lang);
+            $user=$request->user();
+            $rule=['email' => 'required|email|unique:customers,email,'.$user->id,];
+            $validator=$this->validation($request,$rule);
+            if ($validator->fails()){
+                $errors=collect($validator->errors())->map(function($q){
+                    return $q[0];
+                });
+                return response()->json($errors,404);
+            }
+
             return $user;
         }
-        if($user->email == $request->email){
-            return response()->json(['email'=>__('text.You already have this email')],404);
+    //
+
+    //change phone
+        public function changePhone(Request $request){
+            $user=$this->phoneValidation($request);
+            if(!isset($user->id)){
+                return $user;
+            }
+            $code=substr(str_shuffle('1234567890'),0,6);
+            $user->update(['code' => $code]);
+            $setting=Setting::find(1);
+            if($setting->twillo_token && $setting->twillo_phone && $setting->twillo_sid){
+                send_sms('+2'.$user->phone,__('text.Verification code').$user->code);
+                return $this->success(['phone'=>$request->phone,'status'=>true],__('text.We have sent a verification code to your number').":".$request->phone,200);
+
+            }else{
+                Mail::to($user->email)->send(new SendCode($code,$user->name));
+                return $this->success(['phone'=>$request->phone,'status'=>false],__('text.We have sent a verification code to your email').":".$user->email,200);
+            }
         }
-        $code=substr(str_shuffle('1234567890'),0,6);
-        $user->update(['code' => $code]);
-        Mail::to($request->email)->send(new SendCode($code,$user->name));
-        return $this->success($request->email,__('text.We have sent a verification code to your email').":".$request->email,200);
-    }
 
+        public function checkPhoneOtp(Request $request){
+            $user=$this->phoneValidation($request);
+            if(!isset($user->id)){
+                return $user;
+            }
+            if(isset($request->phone) && $request->code == $user->code ){
+                $user->update(['phone' => $request->phone,'code' => null]);
+                $user->save();
+                return $this->success($request->phone,__('text.Updated Successfully'),200);
+            }else{
+                return response()->json(['code'=>__('text.Invalid Code!')],404);
+            }
+        }
 
-    public function checkEmailOtp(Request $request){
-        $user=$this->emailValidation($request);
-        if(!isset($user->id)){
+        protected function phoneValidation($request){
+            app()->setlocale($request->lang);
+            $user=$request->user();
+            $rule=['phone' => 'required|numeric|unique:customers,phone,'.$user->id];
+            $validator=$this->validation($request,$rule);
+            if ($validator->fails()){
+                $errors=collect($validator->errors())->map(function($q){
+                    return $q[0];
+                });
+                return response()->json($errors,404);
+            }
+            if($user->phone == $request->phone){
+                return response()->json(['phone'=>__('text.You already have this phone')],404);
+            }
             return $user;
         }
-        if($request->code == $user->code && isset($request->email)){
-            $user->update(['email' => $request->email,'code' => null]);
-            $user->save();
-            return $this->success($request->email,__('text.Updated Successfully'),200);
-        }else{
-            return response()->json(['code'=>__('text.Invalid Code!')],404);
-        }
-
-    }
-
-    protected function emailValidation($request){
-        app()->setlocale($request->lang);
-        $user=$request->user();
-        $rule=['email' => 'required|email|unique:customers,email,'.$user->id,];
-        $validator=$this->validation($request,$rule);
-        if ($validator->fails()){
-            $errors=collect($validator->errors())->map(function($q){
-                return $q[0];
-            });
-            return response()->json($errors,404);
-        }
-
-        return $user;
-    }
-    public function changePhone(Request $request){
-        $user=$this->phoneValidation($request);
-        if(!isset($user->id)){
-            return $user;
-        }
-        $code=substr(str_shuffle('1234567890'),0,6);
-        $user->update(['code' => $code]);
-        $setting=Setting::find(1);
-        if($setting->twillo_token && $setting->twillo_phone && $setting->twillo_sid){
-            send_sms('+2'.$user->phone,__('text.Verification code').$user->code);
-            return $this->success(['phone'=>$request->phone,'status'=>true],__('text.We have sent a verification code to your number').":".$request->phone,200);
-
-        }else{
-            Mail::to($user->email)->send(new SendCode($code,$user->name));
-            return $this->success(['phone'=>$request->phone,'status'=>false],__('text.We have sent a verification code to your email').":".$user->email,200);
-        }
-    }
-
-    public function checkPhoneOtp(Request $request){
-        $user=$this->phoneValidation($request);
-        if(!isset($user->id)){
-            return $user;
-        }
-        if(isset($request->phone) && $request->code == $user->code ){
-            $user->update(['phone' => $request->phone,'code' => null]);
-            $user->save();
-            return $this->success($request->phone,__('text.Updated Successfully'),200);
-        }else{
-            return response()->json(['code'=>__('text.Invalid Code!')],404);
-        }
-    }
-
-    protected function phoneValidation($request){
-        app()->setlocale($request->lang);
-        $user=$request->user();
-        $rule=['phone' => 'required|numeric|unique:customers,phone,'.$user->id];
-        $validator=$this->validation($request,$rule);
-        if ($validator->fails()){
-            $errors=collect($validator->errors())->map(function($q){
-                return $q[0];
-            });
-            return response()->json($errors,404);
-        }
-        if($user->phone == $request->phone){
-            return response()->json(['phone'=>__('text.You already have this phone')],404);
-        }
-        return $user;
-    }
+    //
 
     protected function validation($request,$rule,$message=[]){
         return  Validator::make($request->all(),$rule,$message);
