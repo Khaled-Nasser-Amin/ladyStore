@@ -31,6 +31,8 @@ class OrderController extends Controller
         if($validation->fails()){
             return response()->json($validation->errors(),404);
         }
+
+
         $sizes_id=collect($request->sizes_id)->groupBy('id')->map(function($item){
             return [
                 'id' =>$item->first()['id'],

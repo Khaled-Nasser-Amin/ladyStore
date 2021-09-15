@@ -54,7 +54,7 @@ class User extends Authenticatable
     }
 
     public function orders_colors(){
-        return $this->products_colors()->has('orders');
+        return $this->products_colors()->has('order');
     }
 
     public function orders(){
