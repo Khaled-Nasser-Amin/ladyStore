@@ -54,15 +54,15 @@ class ProductController extends Controller
     public function show(Request $request,Product $product,$slug){
         $this->authorize('view',$product);
         $images[]=['name' => $product->image];
-        return view('admin.ProductManagement.products.show',compact('product','images'));
+        return view('admin.productManagement.products.show',compact('product','images'));
     }
     public function addNewProduct(){
         $this->authorize('create',Product::class);
-        return view('admin.ProductManagement.products.create');
+        return view('admin.productManagement.products.create');
     }
     public function updateProduct(Product $product){
         $this->authorize('update',$product);
-        return view('admin.ProductManagement.products.edit',compact('product'));
+        return view('admin.productManagement.products.edit',compact('product'));
     }
 
 

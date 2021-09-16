@@ -29,7 +29,7 @@
 
                                 <h4 class="text-white">@lang('text.We have sent Message To your Email address.')</h4>
 
-                                <p class="text-white"> @lang('text.Please Check your email address') </p>
+                                <p class="text-white"> @lang('text.Please Check your email address') : {{ session()->get('email')?? null }}</p>
                             </div>
 
                         </div>

@@ -31,8 +31,6 @@ class OrderController extends Controller
         if($validation->fails()){
             return response()->json($validation->errors(),404);
         }
-
-
         $sizes_id=collect($request->sizes_id)->groupBy('id')->map(function($item){
             return [
                 'id' =>$item->first()['id'],
@@ -71,7 +69,7 @@ class OrderController extends Controller
 
         if($request['payment_way'] == 'online payment'){
             $payment=new MyFatoorahController();
-            $data=$payment->index($subtotal+$taxes,$user->name,$user->phone,$user->email,$order->id);
+            $data=$payment->index($order->total_amount,$user->name,$user->phone,$user->email,$order->id);
             if($data == 'error'){
                 $order->update(['payment_way' => 'cash on delivery']);
                 $order->save();

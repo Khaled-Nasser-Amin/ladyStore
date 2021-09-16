@@ -40,6 +40,8 @@ Route::get('/', function(){
 })->middleware('guest');
 
 
+
+
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){ //...
     //front landing page
 

@@ -18,7 +18,7 @@ class SizesCollection extends JsonResource
             return [
                 'id' => $this->id,
                 'size' => $this->size,
-                'stock' => $this->stock,
+                'stock' => (int) $this->stock,
             ];
         }
 

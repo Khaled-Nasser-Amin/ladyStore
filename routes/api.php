@@ -60,9 +60,6 @@ Route::middleware(['Auth:delivery_service_provider_api','scope:delivery'])->post
         Route::post('/logout',[AuthController::class,'logout']);
 
 
-        Route::post('/token',function(){
-                return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiNjY0Y2YyZDIxMTQ5NjU4YjU0OTIxYjJmYTZjNmYzMTc4ZmI3YzI1OTY1M2FhYmIzMTc5ODZjYjMyMDM1Yjc2YjM3YWU4YjkzMGM3MTYzYjQiLCJpYXQiOjE2MzE0NTg0NjUuODE5MTE1LCJuYmYiOjE2MzE0NTg0NjUuODE5MTIzLCJleHAiOjE2NjI5OTQ0NjUuODExMDA3LCJzdWIiOiIxIiwic2NvcGVzIjpbImN1c3RvbWVyIl19.uPD1I6aYjVAtSWI2tHXs8t5qlmHORRdY9jjeXFzWLoDocOVUaVJCfTCfkQGuRKYxsja00YMIrdDuyXTVrkhc1b0G_Oz3ToBXt84vSOpExASU4NJimg7bqTSc7t-Z4m4LxLyqz4xyAQS8LsHjHOn7mMmTuuyShKBAyrDUEXTBtRyGJ89OPpu3sB18t_OqcW-MmXSyFp1EPi5n_vHVuhSnciBMeuMiAT_ygCvL1E04mZlTFHzoxcLbTx48bGcChL5zX2SOmHoCI1zNCXQegZSpyTtR4NfMtUGY6rJzwFNnYM3XOTrzA5qvIiLnAqVYM9arv6edkgku1YqsfnV45vNqzwvy_kPBNIKPuCb0hXZViLrGmNcPlqpg3D1s7OUZ5DYR2IcPMXWS-_f08jmjd8kegXyJut_gkXpB6-Q9OTeIhtk8cookZHXhqYHXBPDjXUSz_LOAvyvQW3k5DvIgOXXqZnkxV3PfRg-RQXYL1VQZ0eanvqxwJI-RXAt2c9QdsJOS36AVN4oOmcJTlQRZ05SbwuWCh-V8bcD7uEqN2_wp82bRFCjWE40__JtcCmRL-Q5v7uM6j_VStU0l-mULSUoId7a3shwkd3srUSHsXvOWUAgY5W4Gs71akvLy38YCAFGkF1EssXuIJi85RuGZUcwEK52pJYNQqlPxtpcxYQck6Hk';
-        });
 
         //change passowrd
         Route::post('/forget-password',[AuthController::class,'forgetPassword'])->middleware('throttle:5,1');
