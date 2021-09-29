@@ -3,6 +3,7 @@
 use App\Models\Category;
 use Aloha\Twilio\Twilio;
 use App\Models\Activity;
+use App\Models\Refund;
 use App\Models\Setting;
 
 function send_sms($to,$message){
@@ -93,4 +94,11 @@ function create_activity($activity_action,$vendor_id,$belongs_to_id){
 
 function getOrdersCurrentMonth($q){
     return $q->order()->whereYear('created_at',session()->get('current_year')??null)->whereMonth('created_at',session()->get('current_month')??null);
+}
+
+
+//return sizes refund
+function sizes_refund($order_id,$sizes){
+    return Refund::where('order_id',$order_id)->whereIn('size_id',$sizes)->get();
+
 }

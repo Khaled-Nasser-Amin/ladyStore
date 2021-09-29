@@ -32,9 +32,16 @@ return [
     'For each kilometer' => 'For each kilometer',
     'For each city' => 'For each city',
     'Cost for kilometer' => 'Cost for kilometer',
+    'Proccessing' => 'Proccessing',
+
+    'Your order'=>'Your order',
+    'get canceled'=>'get canceled',
+    'get modified'=>'get modified',
+    'get completed'=>'get completed',
 
     'Yes, restore it!' => 'Yes, restore it!',
     'Subtotal' => 'Subtotal',
+    'Modified' => 'Modified',
     'Order already shipped' => 'Order already shipped',
     'Order cancelled successfully' => 'Order cancelled successfully',
     'Your product\'s size is empty' => 'Your product\'s size is empty',
@@ -502,5 +509,19 @@ return [
     'Oops, This Page Could Not Be Found'=>'Oops, This Page Could Not Be Found!',
     'Invalid Password'=>'Invalid Password',
     'Return Back'=>'Return Back',
+
+
+
+    'Money Refunded'=>'Money Refunded',
+    'Item Returned Successfully'=>'Item Returned Successfully',
+    'Choose Item\'s Status'=>'Choose Item\'s Status',
+    'Not Refunded Yet'=>'Not Refunded Yet',
+    'Items Returned'=>'Items Returned',
+    'Not Returned Yet'=>'Not Returned Yet',
+    'Item Status'=>'Item Status',
+
+
+    'Sale Price'=>'Sale Price',
+    'Completed Orders' => 'Completed Orders',
 
 ];

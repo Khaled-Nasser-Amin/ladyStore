@@ -30,7 +30,7 @@
                             <x-general.input-error for="price" />
                         </div>
                         <div class="col-sm-6">
-                            <label for="sale">{{__('text.Sale')}}</label><br>
+                            <label for="sale">{{__('text.Sale Price')}}</label><br>
                             <input type="number" wire:model='sale' class="form-control" id="sale" autocomplete="none"><br>
                             <x-general.input-error for="sale" />
                         </div>

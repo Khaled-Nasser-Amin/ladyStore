@@ -23,6 +23,7 @@
                     <li><a href="{{route('admin.taxes')}}" class="text-dark"><i class="mdi mdi-currency-usd-off"></i>{{__('text.Taxes')}}</a></li>
                     <li><a href="{{route('admin.settings')}}" class="text-dark"><i class="mdi mdi-cogs"></i>{{__('text.Settings')}}</a></li>
                 @endcan
+                    <li><a href="{{route('admin.refunds')}}" class="text-dark"><i class="mdi mdi-cash-refund"></i>{{__('text.Refunds')}}</a></li>
                     <li><a href="{{route('admin.activities')}}" class="text-dark"><i class="mdi mdi-bell-ring"></i>{{__('text.Activities')}}</a></li>
                     <li><a href="{{route('admin.recycleBin')}}" class="text-dark"><i class="mdi mdi-delete"></i>{{__('text.Recycle Bin')}}</a></li>
 

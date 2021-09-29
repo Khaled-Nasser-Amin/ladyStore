@@ -12,6 +12,12 @@
                 width: 49%!important;
             }
         }
+        @media(max-width:460px){
+            .widget-box-one .card-body .avatar-lg{
+                float: none!important;
+            }
+        }
+
     </style>
 @endpush
 @section('content')
@@ -70,10 +76,10 @@
                 </div>
                 @can('isAdmin')
                  <div class="box" style="width: 33%">
-                    <div class="card widget-box-one border border-success bg-soft-info">
+                    <div class="card widget-box-one border border-info bg-soft-info">
                         <div class="card-body">
                             <div class="float-right avatar-lg rounded-circle mt-3">
-                                <i class="mdi mdi-account-group font-30 widget-icon rounded-circle avatar-title text-warning"></i>
+                                <i class="mdi mdi-account-group font-30 widget-icon rounded-circle avatar-title text-info"></i>
                             </div>
                             <div class="wigdet-one-content">
                                 <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">{{__('text.Vendors')}}</p>
@@ -83,10 +89,10 @@
                     </div>
                 </div>
                 <div class="box" style="width: 33%">
-                    <div class="card widget-box-one border border-success bg-soft-info">
+                    <div class="card widget-box-one border border-success bg-soft-success">
                         <div class="card-body">
                             <div class="float-right avatar-lg rounded-circle mt-3">
-                                <i class="mdi mdi-account font-30 widget-icon rounded-circle avatar-title text-warning"></i>
+                                <i class="mdi mdi-account font-30 widget-icon rounded-circle avatar-title text-success"></i>
                             </div>
                             <div class="wigdet-one-content">
                                 <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">{{__('text.Users')}}</p>
@@ -100,10 +106,10 @@
                     <div class="card widget-box-one border border-danger bg-soft-danger">
                         <div class="card-body">
                             <div class="float-right avatar-lg rounded-circle mt-3">
-                                <i class="mdi mdi-tshirt-crew font-30 widget-icon rounded-circle avatar-title text-warning"></i>
+                                <i class="mdi mdi-truck font-30 widget-icon rounded-circle avatar-title text-danger"></i>
                             </div>
                             <div class="wigdet-one-content">
-                                <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">{{__('text.Orders')}}</p>
+                                <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">{{__('text.Completed Orders')}}</p>
                                 <h2><span data-plugin="counterup">{{ $orders }}</span> </h2>
                             </div>
                         </div>
@@ -113,7 +119,7 @@
                     <div class="card widget-box-one border border-secondary bg-soft-secondary">
                         <div class="card-body">
                             <div class="float-right avatar-lg rounded-circle mt-3">
-                                <i class="mdi mdi-cash-multiple  font-30 widget-icon rounded-circle avatar-title text-success"></i>
+                                <i class="mdi mdi-cash-multiple  font-30 widget-icon rounded-circle avatar-title text-secondary"></i>
                             </div>
                             <div class="wigdet-one-content">
                                 <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">{{__('text.Total Amount')}}</p>

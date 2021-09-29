@@ -30,9 +30,9 @@ class MyFatoorahController extends Controller
 
         //Call endpoint
         $data = $this-> sendPayment($this->apiURL, $this->apiKey, $postFields);
-        
-        
-        // return if there is error 
+
+
+        // return if there is error
         if($data == 'error')
             return $data;
 
@@ -158,7 +158,7 @@ class MyFatoorahController extends Controller
             'InvoiceValue'       => $invoice_value,
             'CustomerName'       => $user_name,
                 //Fill optional data
-                // 'DisplayCurrencyIso' => 'KWD',
+                'DisplayCurrencyIso' => 'KWD',
                 // 'MobileCountryCode'  => '+965',
                 // 'CustomerMobile'     => $user_phone,
                 // 'CustomerEmail'      => $user_email,

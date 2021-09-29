@@ -24,7 +24,6 @@ class SendCode extends Mailable
 
     public function build()
     {
-       $admin= User::where('role','admin')->first();
-        return $this->from($admin->email)->markdown('emails.send_otp',['code'=>$this->code,'name' => $this->name]);
+        return $this->markdown('emails.send_otp',['code'=>$this->code,'name' => $this->name]);
     }
 }

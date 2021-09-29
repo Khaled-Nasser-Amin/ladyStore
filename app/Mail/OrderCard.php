@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderCard extends Mailable
+class OrderCard extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $order,$vendor;

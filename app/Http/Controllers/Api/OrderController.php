@@ -25,9 +25,7 @@ class OrderController extends Controller
         app()->setLocale($request->lang);
         $user=$request->user();
         $request['payment_way']= strtolower($request['payment_way']) == 'online payment' ? 'online payment' : 'cash on delivery';
-        $validation=Validator::make($request->all(),$this->rules(),[
-            'sizes_id.*.id.exists' => $request->lang == 'ar' ? 'هذا المقاس غير موجود' : 'This size does not exist'
-        ]);
+        $validation=Validator::make($request->all(),$this->rules());
         if($validation->fails()){
             return response()->json($validation->errors(),404);
         }
@@ -104,7 +102,6 @@ class OrderController extends Controller
     protected function rules(){
         return [
             'sizes_id' => 'required|array|min:1',
-            'sizes_id.*.id' => 'exists:sizes,id',
             'location' => 'required|string|max:255',
             'payment_way' => ['required',Rule::in(['cash on delivery','online payment'])],
             'lat_long' => 'required',
@@ -235,9 +232,14 @@ class OrderController extends Controller
         app()->setLocale($request->lang);
         $user=$request->user();
         $order=Order::find($request->order_id);
+
         if($order){
             if($user->id == $order->user_id){
                 if($order->order_status == 'pending'){
+                    foreach($order->sizes()->withTrashed()->get() as $size){
+                        $quantity=$order->sizes->where('id',$size->id)->pluck('pivot.quantity')->first();
+                        $size->update(['stock' => $size->stock+$quantity]);
+                    }
                     $order->delete();
                     return $this->success('',__('text.Order cancelled successfully'),200);
                 }else{
@@ -271,6 +273,57 @@ class OrderController extends Controller
             return response()->json('',404);
         }
 
+    }
+
+
+    public function all_orders(Request $request)
+    {
+        $user=$request->user();
+        return $this->success(OrderResource::collection($user->orders()->where('order_status' ,'!=','completed')->where('order_status' ,'!=','canceled')->where('order_status' ,'!=','modified')->get()),'',200);
+
+    }
+
+
+    public function order_details(Request $request)
+    {
+        app()->setlocale($request->lang);
+        $user=$request->user();
+        $order=Order::find($request->order_id);
+
+        if($order && $order->user_id == $user->id&& ($order->order_status != 'completed' || $order->order_status != 'canceled' || $order->order_status != 'modified')){
+
+
+                foreach( $order->sizes()->withTrashed()->get() as $size){
+
+                    $amount=$order->colors()->withTrashed()->where('color_id',$size->color->id)->first()->pivot->amount;
+                    $tax=$size->color()->withTrashed()->first()->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax');
+                    $products[]=[
+                        'size' => $size->pivot->size,
+                        'quantity' => $size->pivot->quantity,
+                        'image' => $size->color()->withTrashed()->first()->images()->first()->name,
+                        'color' => $size->color()->withTrashed()->first()->color,
+                        'name' => app()->getLocale()== 'ar' ? $size->color()->withTrashed()->first()->product()->withTrashed()->first()->name_ar:$size->color()->withTrashed()->first()->product()->withTrashed()->first()->name_en,
+                        'price' => $amount + ($amount*($tax/100)) ,
+                    ];
+                }
+
+                $data=
+                        [
+                            'taxes' => $order->taxes,
+                            'order_status' => $order->order_status,
+                            'subtotal' => $order->subtotal,
+                            'shipping' => $order->shipping,
+                            'total_amount' => $order->total_amount,
+                            'products' =>$products
+                        ];
+
+
+            return $this->success($data,'',200);
+
+
+        }else{
+            return $this->error(__('text.Not Found'),404);
+        }
     }
 
 

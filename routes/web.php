@@ -19,6 +19,7 @@ use App\Http\Livewire\Admin\ProductsManagement\Orders\Orders;
 use App\Http\Livewire\Admin\ProductsManagement\Settings\Settings;
 use App\Http\Livewire\Admin\ProductsManagement\Products\Products;
 use App\Http\Livewire\Admin\ProductsManagement\RecycleBin\MainController;
+use App\Http\Livewire\Admin\ProductsManagement\Refunds\Refunds;
 use App\Http\Livewire\Admin\ProductsManagement\Shipping\ShippingCosts;
 use App\Http\Livewire\Admin\ProductsManagement\Taxes\Taxes;
 use App\Http\Livewire\Admin\ProductsManagement\Vendors\Vendors;
@@ -89,6 +90,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         Route::get('/shipping', ShippingCosts::class)->name('admin.shipping')->middleware('can:isAdmin');
         Route::get('/taxes', Taxes::class)->name('admin.taxes')->middleware('can:isAdmin');
         Route::get('/activities', Activities::class)->name('admin.activities');
+        Route::get('/refunds', Refunds::class)->name('admin.refunds');
         Route::get('/customers', Customers::class)->name('admin.customers')->middleware('can:isAdmin');
         Route::get('/deliverySerivceProvider', DeliverySerivceProvider::class)->name('admin.deliveryServiceProvider')->middleware('can:isAdmin');
         Route::get('/vendors', Vendors::class)->name('admin.vendors')->middleware('can:isAdmin');

@@ -319,6 +319,9 @@ return [
     'Shipping Cost' => 'تكلفة الشحن',
     'Yes, restore it!' => 'نعم,استعادة',
     'Shipping' => 'الشحن',
+    'Modified' => 'تم التعديل',
+    'Proccessing' => 'قيد التنفيذ',
+    'Collected' => 'تم التجميع',
     'Image Required' => 'الصورة مطلوبة',
     'Restored Successfully' => 'تمت الاستعادة بنجاح',
     'Restore' => 'استعادة',
@@ -482,6 +485,10 @@ return [
     'Land Line'=>'الخط الارضي',
     'Join Us'=>'انضم إلينا',
     'Stop waiting and join us as a vendor to display your products.'=>'توقف عن الانتظار وانضم إلينا كبائع لعرض منتجاتك',
+    'Your order'=>'طلبك رقم',
+    'get canceled'=>'تم اِلغائه',
+    'get modified'=>'تم تعديله',
+    'get completed'=>'تم اكتماله',
     'Download'=>'تحميل',
     'Contact Us'=>'تواصل معنا',
     'Join us as a Vendor'=>'انضم لنا كبائع',
@@ -505,6 +512,20 @@ return [
 
     'Oops, This Page Could Not Be Found'=>'اوبس, هذه الصفحة ليست موجودة',
     'Oops, UNAUTHORIZED'=>'اوبس, غير مصرح به',
+
+
+
+    'Money Refunded'=>'تم رد المال',
+    'Item Returned Successfully'=>'تم ارجاع العنصر بنجاح',
+    'Choose Item\'s Status'=>'اختر حالة العنصر',
+    'Not Refunded Yet'=>'لم يتم رد المال بعد',
+    'Items Returned'=>'المنتجات تم ارجاعها',
+    'Not Returned Yet'=>'لم يتم ارجاعها بعد',
+    'Item Status'=>'حالة المنتج',
+
+    'Sale Price'=>'السعر بعد التخفيض',
+    'Completed Orders' => 'الطلبات المكتملة',
+
 
 
 

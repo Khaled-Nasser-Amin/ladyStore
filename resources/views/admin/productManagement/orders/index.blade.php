@@ -47,6 +47,8 @@
                                     <option value=""></option>
                                     <option value="pending">@lang('text.Pending')</option>
                                     <option value="processing">@lang('text.Processing')</option>
+                                    <option value="collected">@lang('text.Collected')</option>
+                                    <option value="modified">@lang('text.Modified')</option>
                                     <option value="completed">@lang('text.Completed')</option>
                                     <option value="canceled">@lang('text.Canceled')</option>
                                 </select>

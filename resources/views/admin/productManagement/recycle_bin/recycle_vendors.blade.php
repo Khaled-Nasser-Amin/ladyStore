@@ -20,7 +20,8 @@
                     <th>{{__('text.Email')}}</th>
                     <th>{{__('text.Location')}}</th>
                     <th>{{__('text.Phone Number')}}</th>
-                    <th>{{__('text.Number of Orders')}}</th>
+                    <th>{{__('text.Completed Orders')}}</th>
+                    <th>{{__('text.Refunds')}}</th>
                     <th>{{__('text.Total Amount')}}</th>
                     <th>{{__('text.Status')}}</th>
                     <th>{{__('text.Action')}}</th>
@@ -33,8 +34,9 @@
                         <td>{{$vendor->email}}</td>
                         <td>{{$vendor->location}}</td>
                         <td>{{$vendor->phone}}</td>
-                        <td> {{$vendor->orders->count()}} </td>
-                        <td> {{$vendor->orders->sum('pivot.subtotal')}} </td>
+                        <td> {{$vendor->orders->where('payment_status','paid')->count()}} </td>
+                        <td>{{$vendor->refunds->where('refund_status','not refunded yet')->sum('total_refund_amount')}}</td>
+                        <td> {{$vendor->orders->where('payment_status','paid')->sum('pivot.total_amount')}} </td>
                         <td>{{ $vendor->activation == 0 ? __('text.Non Active'): __('text.Active') }}</td>
                         <td>
                             <button  wire:click.prevent="confirmRestore({{$vendor->id}})" class="btn btn-primary mt-3 btn-rounded btn-bordered waves-effect width-md waves-light text-white d-block mx-auto w-75">{{__('text.Restore')}}</button>

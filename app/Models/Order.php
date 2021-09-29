@@ -30,6 +30,10 @@ class Order extends Model
         return $this->belongsTo(DeliveryServiceProvider::class);
 
     }
+    public function refunds(){
+        return $this->hasMany(Refund::class);
+
+    }
 
     public function vendors(){
         return $this->belongsToMany(User::class,'order_vendor','order_id','vendor_id')->withPivot(['subtotal','taxes','total_amount']);

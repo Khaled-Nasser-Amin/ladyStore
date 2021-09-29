@@ -180,8 +180,8 @@ class AuthController extends Controller
         return [
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:8',
-            'phone' => 'required|numeric|unique:customers|unique:delivery_service_providers',
-            'email' => 'required|email|max:255|unique:customers|unique:delivery_service_providers',
+            'phone' => 'required|numeric|unique:customers',
+            'email' => 'required|email|max:255|unique:customers',
         ];
     }
 

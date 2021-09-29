@@ -122,6 +122,14 @@
                                         <th >@lang('text.Taxes') </th>
                                         <th >@lang('text.Color')</th>
                                         <th >@lang('text.Sizes')</th>
+
+                                        @php
+                                            $refunds=sizes_refund($order->id,$row->sizes()->withTrashed()->get()->pluck('id')->toArray());
+                                        @endphp
+
+                                        @if ($refunds->count() > 0)
+                                        <th >@lang('text.Refunds')</th>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td>{{ $row->product()->withTrashed()->first()->user()->withTrashed()->pluck('store_name')->first() }} </td>
@@ -133,12 +141,18 @@
                                                 return $q->pluck('name_en')->first();
                                             }
                                         })}}</td>
-                                        <td>{{$row->pivot->amount}} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}</td>
+                                        <td>{{$row->pivot->amount}} @lang('text.RSA')</td>
                                         <td>{{$row->pivot->quantity}}</td>
                                         <td>{{$row->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax')."% = ".((($row->pivot->amount*$row->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax'))/100)*$row->pivot->quantity)}} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}</td>
                                         <td><span class="label label-danger w-100" style="height:25px;border-radius:10px;background-color: {{ $row->color }};display:inline-block"></span></td>
                                         <td>{{ $order->sizes()->withTrashed()->where('color_id',$row->id)->get()->pluck('size')->implode(',') }}</td>
-
+                                        @if ($refunds->count() > 0)
+                                        <td>
+                                            @foreach ($refunds as $refund)
+                                                {{ $refund->quantity .' '. $refund->size.'='. $refund->total_refund_amount}} @lang('text.RSA')
+                                            @endforeach
+                                        </td>
+                                        @endif
                                     </tr>
                                     </tbody>
                                 </table>
@@ -161,13 +175,13 @@
                                             {{
                                                 auth()->user()->role =='admin' ?
                                                 $order->total_amount : $order->vendors->find(auth()->user()->id)->pivot->total_amount
-                                            }} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}
+                                            }} @lang('text.RSA')
                                         </td>
                                         <td>
                                             {{
                                                 auth()->user()->role =='admin' ?
                                                 $order->subtotal : $order->vendors->find(auth()->user()->id)->pivot->subtotal
-                                            }} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}
+                                            }} @lang('text.RSA')
                                         </td>
 
                                         <td>{{ auth()->user()->role =='admin' ?

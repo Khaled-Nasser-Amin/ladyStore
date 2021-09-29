@@ -24,7 +24,7 @@
 @if($vendor->role != 'admin')
 |@lang('text.Total Amount')|@lang('text.Subtotal')|@lang('text.Total Taxes')|
 |:-------------:|:-------------:|:--------:|
-|{{$vendor->role =='admin' ?$order->total_amount : $order->vendors->find($vendor->id)->pivot->subtotal}} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}|{{$vendor->role =='admin' ?$order->subtotal : $order->vendors->find($vendor->id)->pivot->subtotal-$order->vendors->find($vendor->id)->pivot->taxes}} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}|{{ $vendor->role =='admin' ?$order->taxes : $order->vendors->find($vendor->id)->pivot->taxes }}|
+|{{$vendor->role =='admin' ?$order->total_amount : $order->vendors->find($vendor->id)->pivot->total_amount}} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}|{{$vendor->role =='admin' ?$order->subtotal : $order->vendors->find($vendor->id)->pivot->subtotal}} {{ app()->getLocale() == 'ar' ? 'ريال' : 'RSA' }}|{{ $vendor->role =='admin' ?$order->taxes : $order->vendors->find($vendor->id)->pivot->taxes }}|
 @endif
 
 @endcomponent

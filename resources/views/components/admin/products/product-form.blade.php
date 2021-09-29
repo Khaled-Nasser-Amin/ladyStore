@@ -4,27 +4,27 @@
             <div class="p-4">
                 <div class="form-group">
                     <label for="name_ar"> {{__('text.Name_ar')}}</label>
-                    <input type="text" wire:model="name_ar" class="form-control" id="name_ar" name="name_ar" placeholder='عباية ناعمة' >
+                    <input type="text" wire:model="name_ar" class="form-control" id="name_ar" name="name_ar">
                     <x-general.input-error for="name_ar" />
                 </div>
                 <div class="form-group">
                     <label for="name_en"> {{__('text.Name_en')}}</label>
-                    <input type="text" wire:model="name_en" class="form-control" id="name_en" name="name_en" placeholder="Smooth dress" >
+                    <input type="text" wire:model="name_en" class="form-control" id="name_en" name="name_en">
                     <x-general.input-error for="name_en" />
                 </div>
                 <div class="form-group">
                     <label for="slug">{{__('text.Slug')}}</label>
-                    <input type="text" name="slug" wire:model="slug" class="form-control" id="slug" placeholder="Smooth dress - عباية ناعمة">
+                    <input type="text" name="slug" wire:model="slug" class="form-control" id="slug" >
                     <x-general.input-error for="slug" />
                 </div>
                 <div class="form-group">
                     <label for="typeOfFabric">{{__('text.Type Of Fabric')}}</label>
-                    <input type="text" wire:model="typeOfFabric" name="typeOfFabric" class="form-control" id="typeOfFabric" placeholder="قماش الندى" >
+                    <input type="text" wire:model="typeOfFabric" name="typeOfFabric" class="form-control" id="typeOfFabric" >
                     <x-general.input-error for="typeOfFabric" />
                 </div>
                 <div class="form-group mt-2">
                     <label for="typeOfSleeve">{{__('text.Type Of Sleeve')}}</label>
-                    <input type="text" wire:model="typeOfSleeve" name="typeOfSleeve" class="form-control" id="typeOfSleeve" placeholder="مربع">
+                    <input type="text" wire:model="typeOfSleeve" name="typeOfSleeve" class="form-control" id="typeOfSleeve" >
                     <x-general.input-error for="typeOfSleeve" />
                 </div>
 
@@ -61,7 +61,7 @@
 
             <div class="form-group">
                 <label for="additions">{{__('text.Additions')}}</label>
-                <input type="text" wire:model="additions" class="form-control" id="additions" name="additions" autocomplete="none" placeholder="طبقات شيفون">
+                <input type="text" wire:model="additions" class="form-control" id="additions" name="additions" autocomplete="none">
                 <x-general.input-error for="additions" />
             </div>
             <div class="form-group " wire:ignore>
@@ -107,7 +107,7 @@
                     <tr>
                         <th>@lang('text.Color')</th>
                         <th>@lang('text.Price')</th>
-                        <th>@lang('text.Sale')</th>
+                        <th>@lang('text.Sale Price')</th>
                         <th>@lang('text.Action')</th>
                     </tr>
                     @foreach ($colorsIndex as $index => $value)

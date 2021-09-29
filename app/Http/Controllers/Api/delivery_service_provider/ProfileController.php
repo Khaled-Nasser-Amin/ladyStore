@@ -261,8 +261,6 @@ class ProfileController extends Controller
         }else{
             return response()->json(['code'=>__('text.Invalid data!')],404);
         }
-
-
     }
 
 }

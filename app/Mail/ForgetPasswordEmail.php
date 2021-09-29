@@ -24,7 +24,6 @@ class ForgetPasswordEmail extends Mailable
 
     public function build()
     {
-       $admin= User::where('role','admin')->first();
-        return $this->from($admin->email)->markdown('emails.forget_password',['url'=>$this->url,'name' =>$this->name]);
+        return $this->markdown('emails.forget_password',['url'=>$this->url,'name' =>$this->name]);
     }
 }

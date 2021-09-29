@@ -77,11 +77,13 @@ class AuthController extends Controller
         return $this->SendCode($delivery,200);
     }
 
+
+
     //store delivery images
     protected function store_images($image)
     {
         $fileName=time().'_'.$image->getClientOriginalName();
-        $image->move(storage_path('app\public\users\\'),$fileName);
+        $image->move(public_path('images\users\\'),$fileName);
         return $fileName;
     }
 
@@ -196,8 +198,8 @@ class AuthController extends Controller
             'driving_license' => 'required|mimes:jpg,png,jpeg,gif,webp',
             'image' => 'required|mimes:jpg,png,jpeg,gif,webp',
             'personal_id' => 'required|mimes:jpg,png,jpeg,gif,webp',
-            'phone' => 'required|numeric|unique:customers|unique:delivery_service_providers',
-            'email' => 'required|email|max:255|unique:customers|unique:delivery_service_providers',
+            'phone' => 'required|numeric|unique:delivery_service_providers',
+            'email' => 'required|email|max:255|unique:delivery_service_providers',
         ];
     }
 

@@ -19,6 +19,7 @@ class AdminController extends Controller
         $current_month_orders=auth()->user()->orders()->where('payment_status','paid')->getOrdersThroughMonth($date['year'],$date['month']);
         $last_month_orders=auth()->user()->orders()->where('payment_status','paid')->getOrdersThroughMonth($date['last_year'],$date['last_month']);
         $orders=auth()->user()->orders->where('payment_status','paid')->count();
+        $total_refunds=auth()->user()->refunds->where('refund_status','not refunded yet')->sum('total_refund_amount');
         $products=auth()->user()->products->where('isActive',1)->count();
         $inactive_products=auth()->user()->products()->where('isActive',0)->count();
         $inactive_colors_counter=0;
@@ -29,7 +30,7 @@ class AdminController extends Controller
             return $item->sizes->sum('stock');
         });
         $total_amount=auth()->user()->orders->where('payment_status','paid')->sum('pivot.total_amount');
-        return view('admin.dashboard',compact('products','orders','total_amount','current_month_orders','last_month_orders','inactive_products','inactive_colors_counter'));
+        return view('admin.dashboard',compact('products','orders','total_amount','current_month_orders','last_month_orders','inactive_products','inactive_colors_counter','total_refunds'));
 
     }
     public function index_for_app(){

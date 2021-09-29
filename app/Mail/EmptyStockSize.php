@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EmptyStockSize extends Mailable
+class EmptyStockSize extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $product_name,$vendor_name,$color,$size;
