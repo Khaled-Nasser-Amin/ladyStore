@@ -89,8 +89,8 @@ class OrderController extends Controller
             $tax=$size->color->product->taxes->sum('tax') == 0 ? 0:(($finalPrice* $size->color->product->taxes->sum('tax'))/100)*$row['quantity'];
             $taxes  += $tax;
             $vendors[]=['vendor_id'=>$size->color->product->user_id,'tax' => $tax,'subtotal'=>( $finalPrice* $row['quantity'])];
-            $colors[]=['color_id' => $size->color->id,'quantity' => $row['quantity'] , 'amount' =>$finalPrice ,'total_amount' => $finalPrice*$row['quantity'],'color'=> $size->color->color];
-            $size->order()->syncWithoutDetaching([$order->id => ['quantity' => $row['quantity'],'size' => $size->size]]);
+            $colors[]=['color_id' => $size->color->id,'quantity' => $row['quantity'] , 'amount' =>$finalPrice ,'total_amount' => $finalPrice*$row['quantity'],'color'=> $size->color->color ];
+            $size->order()->syncWithoutDetaching([$order->id => ['quantity' => $row['quantity'],'size' => $size->size,'price'=> $finalPrice ,'tax'=>$tax]]);
             $size->update(['stock' => ($size->stock-$row['quantity'])]);
             $products[]=['product_id'=>$size->color->product_id];
 
@@ -298,22 +298,23 @@ class OrderController extends Controller
                     $amount=$order->colors()->withTrashed()->where('color_id',$size->color->id)->first()->pivot->amount;
                     $tax=$size->color()->withTrashed()->first()->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax');
                     $products[]=[
-                        'size' => $size->pivot->size,
-                        'quantity' => $size->pivot->quantity,
+                        'size' => $size->pivot->size."",
+                        'size_id' => (int) $size->id,
+                        'quantity' => $size->pivot->quantity."",
                         'image' => $size->color()->withTrashed()->first()->images()->first()->name,
                         'color' => $size->color()->withTrashed()->first()->color,
                         'name' => app()->getLocale()== 'ar' ? $size->color()->withTrashed()->first()->product()->withTrashed()->first()->name_ar:$size->color()->withTrashed()->first()->product()->withTrashed()->first()->name_en,
-                        'price' => $amount + ($amount*($tax/100)) ,
+                        'price' => $amount + ($amount*($tax/100))."",
                     ];
                 }
 
                 $data=
                         [
-                            'taxes' => $order->taxes,
-                            'order_status' => $order->order_status,
-                            'subtotal' => $order->subtotal,
-                            'shipping' => $order->shipping,
-                            'total_amount' => $order->total_amount,
+                            'taxes' => $order->taxes."",
+                            'order_status' => $order->order_status."",
+                            'subtotal' => $order->subtotal."",
+                            'shipping' => $order->shipping."",
+                            'total_amount' => $order->total_amount."",
                             'products' =>$products
                         ];
 

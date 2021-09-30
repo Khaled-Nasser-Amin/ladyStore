@@ -41,24 +41,24 @@ class OrderController extends Controller
                     $amount = $order->colors()->withTrashed()->where('color_id', $size->color->id)->first()->pivot->amount;
                     $tax = $size->color()->withTrashed()->first()->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax');
                     $products[] = [
-                        'size' => $size->pivot->size,
-                        'size_id' => $size->id,
-                        'quantity' => $size->pivot->quantity,
+                        'size' => $size->pivot->size."",
+                        'size_id' => (int) $size->id,
+                        'quantity' => $size->pivot->quantity."",
                         'image' => $size->color()->withTrashed()->first()->images()->first()->name,
                         'color' => $size->color()->withTrashed()->first()->color,
                         'name' => app()->getLocale() == 'ar' ? $size->color()->withTrashed()->first()->product()->withTrashed()->first()->name_ar : $size->color()->withTrashed()->first()->product()->withTrashed()->first()->name_en,
-                        'price' => $amount + ($amount * ($tax / 100)),
+                        'price' => $amount + ($amount * ($tax / 100))."",
                     ];
                 }
 
                 $data[] =
                     [
-                        'store_name' => $vendor->store_name,
-                        'location' => $vendor->geoLocation,
-                        'phone' => $vendor->phone,
-                        'taxes' => $vendor->pivot->taxes,
-                        'subtotal' => $vendor->pivot->subtotal,
-                        'total_amount' => $vendor->pivot->total_amount,
+                        'store_name' => $vendor->store_name."",
+                        'location' => $vendor->geoLocation."",
+                        'phone' => $vendor->phone."",
+                        'taxes' => $vendor->pivot->taxes."",
+                        'subtotal' => $vendor->pivot->subtotal."",
+                        'total_amount' => $vendor->pivot->total_amount."",
                         'products' => $products
                     ];
 
@@ -110,10 +110,10 @@ class OrderController extends Controller
     protected function cancel_after_collected($order)
     {
         foreach ($order->sizes()->withTrashed()->get() as $size) {
-            $quantity = $order->sizes->where('id', $size->id)->pluck('pivot.quantity')->first();
-            $price = $size->color()->withTrashed()->first()->sale == 0 ? $size->color()->withTrashed()->first()->price : $size->color()->withTrashed()->first()->sale;
-            $taxes_precentage = $size->color()->withTrashed()->first()->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax');
-            $taxes = ($taxes_precentage / 100) * $price * $quantity;
+            $order_size=$order->sizes->where('id', $size->id);
+            $quantity = $order_size->pluck('pivot.quantity')->first();
+            $price = $order_size->pluck('pivot.price')->first();
+            $taxes = $order_size->pluck('pivot.tax')->first();
             Refund::create([
                 'order_id' => $order->id,
                 'vendor_id' => $size->color()->withTrashed()->first()->product()->withTrashed()->first()->user_id,
@@ -122,7 +122,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $price,
                 'taxes' => $taxes,
-                'size' => $order->sizes->where('id', $size->id)->pluck('pivot.size')->first(),
+                'size' => $order_size->pluck('pivot.size')->first(),
                 'color' => $order->colors->where('id', $size->color()->withTrashed()->first()->id)->pluck('pivot.color')->first(),
                 'subtotal_refund_amount' => $quantity * $price,
             ]);
@@ -151,10 +151,10 @@ class OrderController extends Controller
         foreach (collect($sizes)->toArray() as $size_id) {
             $size = Size::withTrashed()->find($size_id);
             if ($size) {
-                $quantity = $order->sizes->where('id', $size->id)->pluck('pivot.quantity')->first();
-                $price = $size->color()->withTrashed()->first()->sale == 0 ? $size->color()->withTrashed()->first()->price : $size->color()->withTrashed()->first()->sale;
-                $taxes_precentage = $size->color()->withTrashed()->first()->product()->withTrashed()->first()->taxes()->withTrashed()->sum('tax');
-                $taxes = ($taxes_precentage / 100) * $price * $quantity;
+                $order_size=$order->sizes->where('id', $size->id);
+                $quantity = $order_size->pluck('pivot.quantity')->first();
+                $price = $order_size->pluck('pivot.price')->first();
+                $taxes = $order_size->pluck('pivot.tax')->first();
                 $total_refund_amount = ($quantity * $price) + $taxes;
                 $vendor_id = $size->color()->withTrashed()->first()->product()->withTrashed()->first()->user_id;
                 $subtotal_refund = $quantity * $price;
@@ -166,7 +166,7 @@ class OrderController extends Controller
                     'quantity' => $quantity,
                     'price' => $price,
                     'taxes' => $taxes,
-                    'size' => $order->sizes->where('id', $size->id)->pluck('pivot.size')->first(),
+                    'size' => $order_size->pluck('pivot.size')->first(),
                     'color' => $order->colors->where('id', $size->color()->withTrashed()->first()->id)->pluck('pivot.color')->first(),
                     'subtotal_refund_amount' => $subtotal_refund,
                 ]);

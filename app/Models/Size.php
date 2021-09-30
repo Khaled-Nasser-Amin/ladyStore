@@ -15,7 +15,7 @@ class Size extends Model
     }
 
     public function order(){
-        return $this->belongsToMany(Order::class,'orders_sizes','size_id','order_id')->withPivot(['quantity','size']);
+        return $this->belongsToMany(Order::class,'orders_sizes','size_id','order_id')->withPivot(['quantity','size','price','tax']);
     }
 
 

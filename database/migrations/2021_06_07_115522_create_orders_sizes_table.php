@@ -20,6 +20,8 @@ class CreateOrdersSizesTable extends Migration
             $table->unsignedBigInteger('size_id')->nullable();
             $table->foreign('size_id')->references('id')->on('sizes');
             $table->integer('quantity');
+            $table->float('price',11,2)->nullable();
+            $table->float('tax',11,2)->nullable();
             $table->string('size');
         });
     }
