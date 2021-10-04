@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\delivery_service_provider\OrderController as DeliveryOrderController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\VendorController;
 use App\Http\Controllers\Api\WishListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -104,7 +105,11 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('/change_password', [ProfileController::class, 'changePassword']);
         Route::post('/resend_otp', [ProfileController::class, 'resend'])->middleware('throttle:5,1');
 
-        //
+        //vendors
+        Route::post('/all_vendors', [VendorController::class, 'all_vendors']);
+        Route::post('/vendor_products', [VendorController::class, 'vendor_products']);
+
+
     });
 });
 //
