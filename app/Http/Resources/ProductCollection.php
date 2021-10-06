@@ -15,7 +15,7 @@ class ProductCollection extends JsonResource
      */
     public function toArray($request)
     {
-        if($this->isActive == 1){
+        if($this->isActive == 1 && $this->sizes->sum('stock') > 0){
             return [
                     'name' => app()->getLocale() == 'ar' ? $this->name_ar:$this->name_en,
                     'image' => $this->image,
