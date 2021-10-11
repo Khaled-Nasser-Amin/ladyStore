@@ -73,6 +73,8 @@ Route::group(['prefix' => 'user'], function () {
         //products
         Route::post('/product', [Category_ProductsController::class, 'product']);
 
+        Route::post('/featured_slider_products', [Category_ProductsController::class, 'featured_slider_products']);
+
 
         //categories
         Route::post('/categories', [Category_ProductsController::class, 'parent_categories']);

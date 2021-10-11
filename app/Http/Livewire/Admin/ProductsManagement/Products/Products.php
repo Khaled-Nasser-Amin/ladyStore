@@ -11,7 +11,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use Illuminate\Support\Facades\Gate;
 
 class Products extends Component
 {
@@ -96,6 +96,30 @@ class Products extends Component
             ]);
         }else{
             $this->dispatchBrowserEvent('danger',__('text.You have only 6 special products'));
+        }
+
+    }
+
+
+    //update product's featured by admin  for slider
+    public function updateAdminFeatured(Product $product){
+        Gate::authorize('isAdmin');
+        $numberOfProducts=Product::where('featured_slider',1)->count();
+        if ($numberOfProducts < 10 || $product->featured_slider == 1){
+            if($product->featured_slider == 0 ){
+                $featured= 1;
+                create_activity('Added a product as a feature',auth()->user()->id,$product->user_id);
+
+            }else{
+                $featured= 0;
+                create_activity('Removed a product as a feature',auth()->user()->id,$product->user_id);
+            }
+
+            $product->update([
+                'featured_slider'=>$featured
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('danger',__('text.You have only 10 special products'));
         }
 
     }

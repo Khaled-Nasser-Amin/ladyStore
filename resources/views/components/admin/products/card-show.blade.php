@@ -107,6 +107,9 @@
                 @can('update',$product)
                 <button id="changeFeatured" wire:click.prevent="updateFeatured({{$product->id}})" class="btn btn-{{$product->featured == 0 ? "secondary":"primary"}} mt-3 btn-rounded btn-bordered waves-effect width-md waves-light text-white d-block mx-auto w-75">{{__('text.Featured')}} <i class="far fa-star"></i></button>
                 @endcan
+                @can('isAdmin')
+                <button id="changeSliderFeatured" wire:click.prevent="updateAdminFeatured({{$product->id}})" class="btn btn-{{$product->featured_slider == 0 ? "secondary":"primary"}} mt-3 btn-rounded btn-bordered waves-effect width-md waves-light text-white d-block mx-auto w-75">{{__('text.Featured slider')}} <i class="far fa-star"></i></button>
+                @endcan
             </div>
         </div>
     </div>

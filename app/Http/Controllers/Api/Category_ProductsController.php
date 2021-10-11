@@ -49,4 +49,12 @@ class Category_ProductsController extends Controller
             return $this->error("",404);
         }
     }
+
+    public function featured_slider_products(Request $request){
+
+        app()->setlocale($request->lang);
+        $products=Product::where('featured_slider',1)->get();
+        return $this->success(ProductCollection::collection($products));
+
+    }
 }

@@ -500,6 +500,8 @@ return [
     'Tax Created' => 'Tax Created',
     'Tax Deleted' => 'Tax Deleted',
     'Tax' => 'Tax',
+    'You have only 10 special products' => 'You have only 10 special products',
+    'Featured slider' => 'Featured slider',
     'Verification code'=>'Verification code',
     'Success!'=>'Success!',
     'Thank You'=>'Thank You',

@@ -14,7 +14,7 @@ class Product extends Model
         'name_ar', 'name_en',
         'slug', 'description_ar',
         'description_en', 'typeOfFabric', 'typeOfSleeve','additions',
-        'category_id','image','featured','reviews','isActive'
+        'category_id','image','featured','reviews','isActive','featured_slider'
     ];
 
     public $casts=['size' => 'array'];

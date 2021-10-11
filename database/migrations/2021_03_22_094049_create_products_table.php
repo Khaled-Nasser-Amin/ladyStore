@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('typeOfFabric');
             $table->string('typeOfSleeve');
             $table->integer('featured')->default(0);
+            $table->integer('featured_slider')->default(0);
             $table->string('image');
             $table->string('additions')->nullable();
             $table->string('reviews')->default(0);

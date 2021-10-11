@@ -506,6 +506,8 @@ return [
     'Your payment was successful!'=>'تم الدفع الخاص بك بنجاح!',
     'Your payment was successful!'=>'فشل الدفع الخاص بك!',
     'Failed'=>'!فشل',
+    'You have only 10 special products'=>'لديك 10 منتجات مميزة فقط',
+    'Featured slider'=>'عرض كمميز رئيسي',
     'Invalid Password'=>'خطأ في كلمة المرور',
 
 
